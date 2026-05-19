@@ -1,64 +1,35 @@
-// Import kiểu dữ liệu Comic từ file types.ts
-// Giúp TypeScript kiểm tra cấu trúc dữ liệu truyện có đúng hay không
 import { Comic } from '../types';
 
-// HÀM TẠO DANH SÁCH ẢNH TRANG TRUYỆN
-// chapter = số chương
-// count = số trang trong chương (mặc định 10 trang)
+// Generate placeholder comic cover images using picsum.photos
+
+// Sample placeholder images (using picsum.photos)
 const generatePages = (chapter: number, count: number = 10) => {
-    // Array.from tạo mảng mới gồm count phần tử
   return Array.from({ length: count }, (_, i) => 
-    // Tạo link ảnh ngẫu nhiên bằng picsum.photos
-    // mỗi ảnh có seed riêng để không bị trùng
     `https://picsum.photos/seed/ch${chapter}p${i}/800/1200`
   );
 };
-
-/**
- * Comic Data Module
- * ==================
- * Tác giả: Lâm Hoàng
- * Ngày tạo: 22/04/2026
- * Mô tả: Quản lý dữ liệu truyện tranh, danh sách thể loại và thông tin chi tiết từng tác phẩm
- */
 
 export const genres = [
   'Hành Động', 'Phiêu Lưu', 'Hài Hước', 'Tình Cảm', 'Viễn Tưởng',
   'Kinh Dị', 'Thể Thao', 'Học Đường', 'Đời Thường', 'Siêu Nhiên',
   'Phiêu Lưu', 'Lịch Sử', 'Game', 'Mecha', 'Shounen', 'Seinen'
 ];
-// DỮ LIỆU TRUYỆN BAN ĐẦU
-// Đây là database giả lập cho website
-// Lưu danh sách truyện mẫu để test giao diện
+
 export const initialComics: Comic[] = [
   {
-    // Mã truyện (không trùng nhau)
     id: '1',
-    // Tên truyện
     title: 'Thợ Săn Quỷ',
-    // Tác giả
     author: 'Nguyễn Văn A',
-    // Các thể loại của truyện
     genres: ['Hành Động', 'Siêu Nhiên', 'Kinh Dị'],
-    // ongoing = đang cập nhật
-    // completed = đã hoàn thành
     status: 'ongoing',
-    // Ảnh bìa truyện
     coverImage: 'https://picsum.photos/seed/comic1/400/600',
-    // Mô tả ngắn nội dung truyện
     description: 'Câu chuyện về một thợ săn quỷ trẻ tuổi với khả năng đặc biệt, chiến đấu chống lại thế lực bóng tối để bảo vệ nhân loại.',
     chapters: Array.from({ length: 15 }, (_, i) => ({
-    // ID chương
       id: `1-ch${i + 1}`,
-      // Thuộc truyện số 1
       comicId: '1',
-      // Số chương
       number: i + 1,
-      // Tên chương
       title: `Chương ${i + 1}: ${['Khởi Đầu', 'Gặp Gỡ', 'Thử Thách', 'Quyết Đấu', 'Sức Mạnh', 'Đồng Minh', 'Kẻ Thù', 'Bí Mật', 'Mạo Hiểm', 'Chiến Trận', 'Thức Tỉnh', 'Hi Sinh', 'Hy Vọng', 'Đối Đầu', 'Hồi Kết'][i]}`,
-       // Gọi hàm tạo ảnh trang truyện
       pages: generatePages(i + 1),
-      // Ngày Tạo
       createdAt: new Date(Date.now() - (15 - i) * 86400000).toISOString()
     })),
     views: 125000,
@@ -718,47 +689,16 @@ export const initialComics: Comic[] = [
     updatedAt: '2024-03-17'
   }
 ];
-// HÀM LẤY DANH SÁCH TRUYỆN
+
 export const getComics = (): Comic[] => {
-
-  // Lấy dữ liệu từ localStorage
-  // localStorage là bộ nhớ trình duyệt
   const stored = localStorage.getItem('comics');
-
-
-
-  // Nếu đã có dữ liệu trước đó
   if (stored) {
-
-    // JSON.parse chuyển chuỗi thành object
     return JSON.parse(stored);
   }
-
-
-
-  // Nếu chưa có dữ liệu (mở web lần đầu)
-  // thì lưu dữ liệu mẫu vào localStorage
-  localStorage.setItem(
-    'comics',
-    JSON.stringify(initialComics)
-  );
-
-  // Trả về dữ liệu mẫu
+  localStorage.setItem('comics', JSON.stringify(initialComics));
   return initialComics;
 };
 
-
-
-// ==========================
-// HÀM LƯU DỮ LIỆU
-// ==========================
-
 export const saveComics = (comics: Comic[]) => {
-
-  // JSON.stringify chuyển object thành chuỗi
-  // rồi lưu vào localStorage
-  localStorage.setItem(
-    'comics',
-    JSON.stringify(comics)
-  );
+  localStorage.setItem('comics', JSON.stringify(comics));
 };

@@ -1,13 +1,10 @@
 {
-  "_comment": "Tác giả: Xuân Sơn | Ngày tạo: 20/04/2026 | Mô tả: Cấu hình dự án, dependencies, và các script chạy ứng dụng",
   "name": "react-vite-tailwind",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "server:dev": "ts-node server/index.ts",
-    "dev:all": "concurrently \"npm run server:dev\" \"npm run dev\"",
     "build": "vite build",
     "preview": "vite preview"
   },

@@ -2,16 +2,6 @@ import { useState, useEffect } from 'react';
 import { User, Comic, Chapter, Comment, ReadingHistory } from './types';
 import { getComics, saveComics, genres } from './data/comics';
 import { registerUser, loginUser } from './data/users';
-import { SQLCommandExecutor } from './components/SQLCommandExecutor';
-
-/**
- * Main Application Component
- * ==========================
- * Tác giả: Phú Duy
- * Ngày tạo: 28/04/2026
- * Mô tả: Thành phần chính của ứng dụng, quản lý giao diện người dùng, chế độ tối/sáng, 
- *        đăng nhập, quản lý truyện tranh, và tích hợp SQL Command Executor
- */
 
 // Icons
 const SunIcon = () => (
@@ -253,9 +243,6 @@ export default function App() {
   };
 
   // Admin handlers
-  // Lưu thông tin truyện mới hoặc cập nhật truyện đã tồn tại.
-  // Nếu admin nhập URL ảnh vào trường "Link ảnh bìa", giá trị này sẽ được gán vào
-  // thuộc tính coverImage của đối tượng Comic và lưu lại cùng danh sách comics.
   const handleSaveComic = (comicData: Partial<Comic>) => {
     let updatedComics: Comic[];
     
@@ -1314,11 +1301,6 @@ export default function App() {
                 </table>
               </div>
             </div>
-
-            {/* SQL Command Executor */}
-            <div className="mt-8">
-              <SQLCommandExecutor darkMode={darkMode} currentUserId={currentUser?.id} />
-            </div>
           </div>
         )}
       </main>
@@ -1546,9 +1528,6 @@ function ComicFormModal({
               <label className={`block mb-2 font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                 Link ảnh bìa
               </label>
-              <p className={`text-sm mb-2 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                Nhập URL ảnh bìa của truyện. Giá trị này sẽ được lưu trong thuộc tính <code>coverImage</code> của truyện.
-              </p>
               <input
                 type="url"
                 value={formData.coverImage}
